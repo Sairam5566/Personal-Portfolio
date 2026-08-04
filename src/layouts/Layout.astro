@@ -1,0 +1,130 @@
+---
+/**
+ * Layout.astro — Root shell for every page
+ * Imports: global CSS, custom cursor, navigation
+ * Design direction: KINETIC / MOTION-FIRST
+ */
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import CustomCursor from '../components/CustomCursor.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Sairam Lakshmanan — Full-Stack Developer & AI Enthusiast",
+  description = "Personal portfolio of Sairam Lakshmanan, a full-stack developer and AI enthusiast building scalable systems and intelligent interfaces.",
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Sairam Lakshmanan" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-brand-bg text-brand-text overflow-x-hidden">
+    <!-- Custom cursor elements -->
+    <CustomCursor />
+
+    <!-- Navigation -->
+    <Navigation />
+
+    <!-- Main content slot -->
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- Lenis smooth scroll + GSAP init (runs on every page) -->
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── Smooth Scroll (Lenis) ─────────────────────────────
+      // Skip on devices that prefer reduced motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let lenis: InstanceType<typeof Lenis> | null = null;
+      if (!prefersReduced) {
+        lenis = new Lenis({
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          touchMultiplier: 2,
+        });
+
+        // Integrate Lenis with GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time: number) => { lenis!.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      // ── Magnetic Buttons ──────────────────────────────────
+      // Touch devices skip magnetic effect
+      const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+      if (!isTouchDevice && !prefersReduced) {
+        document.querySelectorAll<HTMLElement>('.magnetic').forEach((el) => {
+          const inner = el.querySelector<HTMLElement>('.magnetic-inner') || el;
+          el.addEventListener('mousemove', (e: MouseEvent) => {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = (e.clientX - cx) * 0.35;
+            const dy = (e.clientY - cy) * 0.35;
+            gsap.to(inner, { x: dx, y: dy, duration: 0.4, ease: 'power2.out' });
+          });
+          el.addEventListener('mouseleave', () => {
+            gsap.to(inner, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+          });
+        });
+      }
+
+      // ── Custom Cursor ─────────────────────────────────────
+      if (!isTouchDevice) {
+        const dot  = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0;
+        let ringX  = 0, ringY  = 0;
+
+        document.addEventListener('mousemove', (e: MouseEvent) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          if (dot) {
+            dot.style.left = mouseX + 'px';
+            dot.style.top  = mouseY + 'px';
+          }
+        });
+
+        // Ring lags behind with lerp
+        function animateRing() {
+          ringX += (mouseX - ringX) * 0.1;
+          ringY += (mouseY - ringY) * 0.1;
+          if (ring) {
+            ring.style.left = ringX + 'px';
+            ring.style.top  = ringY + 'px';
+          }
+          requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Hover state on interactive elements
+        const hoverTargets = document.querySelectorAll('a, button, .magnetic, [data-cursor="hover"]');
+        hoverTargets.forEach((el) => {
+          el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+          el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+---
+/**
+ * index.astro — Main page
+ * Assembles all section components in order.
+ * Design Direction: KINETIC / MOTION-FIRST
+ *
+ * HOW TO ADD A NEW SECTION:
+ *   1. Create a new component in src/components/YourSection.astro
+ *   2. Import it here: import YourSection from '../components/YourSection.astro';
+ *   3. Add <YourSection /> in the desired position below
+ *   4. Add a nav link in Navigation.astro if needed
+ */
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Experience from '../components/Experience.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Sairam Lakshmanan — Full-Stack Developer & AI Enthusiast"
+  description="Personal portfolio of Sairam Lakshmanan — final-year CSE student at SRM IST, skilled in Python, Java, FastAPI, React, and AI/ML. Building systems that scale and interfaces that matter."
+>
+  <Hero />
+  <About />
+  <Projects />
+  <Experience />
+  <Contact />
+  <Footer />
+</Layout>

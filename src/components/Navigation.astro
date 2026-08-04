@@ -1,0 +1,156 @@
+---
+/**
+ * Navigation.astro
+ * Fixed top nav with kinetic design.
+ * Features: scroll-aware opacity, active section highlight,
+ *           mobile hamburger drawer, "SL" monogram logo.
+ */
+---
+
+<nav
+  id="main-nav"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+  aria-label="Main navigation"
+>
+  <div class="max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20 py-4 flex items-center justify-between">
+
+    <!-- Monogram logo -->
+    <a
+      href="#hero"
+      class="magnetic group flex items-center gap-2 no-underline"
+      aria-label="Sairam Lakshmanan — back to top"
+    >
+      <div class="magnetic-inner relative w-9 h-9 flex items-center justify-center">
+        <!-- SVG monogram SL -->
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#111414" stroke="#1E2828" stroke-width="1"/>
+          <text x="5" y="25" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="16" fill="#00E5CC">SL</text>
+        </svg>
+        <span class="absolute inset-0 rounded-lg border border-brand-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110"></span>
+      </div>
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="hidden md:flex items-center gap-1 list-none" role="list">
+      {[
+        { href: "#about",      label: "About" },
+        { href: "#projects",   label: "Projects" },
+        { href: "#experience", label: "Experience" },
+        { href: "#contact",    label: "Contact" },
+      ].map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class="nav-link font-mono-accent text-sm text-brand-muted hover:text-brand-text px-4 py-2 rounded-lg transition-colors duration-200 relative group"
+            data-cursor="hover"
+          >
+            <span class="relative z-10">{label}</span>
+            <span class="absolute inset-0 rounded-lg bg-brand-surface opacity-0 group-hover:opacity-100 transition-opacity duration-200 scale-95 group-hover:scale-100"></span>
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href="mailto:sairamlakshmanan2005@gmail.com"
+          class="magnetic ml-2 group relative px-5 py-2 font-mono-accent text-sm text-brand-cyan border border-brand-cyan rounded-lg overflow-hidden transition-colors duration-200 hover:text-brand-bg"
+          data-cursor="hover"
+          aria-label="Send email"
+        >
+          <span class="magnetic-inner relative z-10">hire me</span>
+          <span class="absolute inset-0 bg-brand-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"></span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile hamburger button -->
+    <button
+      id="nav-hamburger"
+      class="md:hidden flex flex-col gap-1.5 p-2 group"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+    >
+      <span class="hamburger-line block w-6 h-px bg-brand-text transition-all duration-300 group-aria-expanded:rotate-45 group-aria-expanded:translate-y-2.5"></span>
+      <span class="hamburger-line block w-6 h-px bg-brand-text transition-all duration-300 group-aria-expanded:opacity-0"></span>
+      <span class="hamburger-line block w-6 h-px bg-brand-text transition-all duration-300 group-aria-expanded:-rotate-45 group-aria-expanded:-translate-y-2.5"></span>
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div
+    id="nav-drawer"
+    class="md:hidden fixed inset-0 top-0 bg-brand-bg/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-400 ease-in-out"
+    aria-hidden="true"
+  >
+    <ul class="flex flex-col items-center gap-6 list-none text-center" role="list">
+      {[
+        { href: "#hero",       label: "Home" },
+        { href: "#about",      label: "About" },
+        { href: "#projects",   label: "Projects" },
+        { href: "#experience", label: "Experience" },
+        { href: "#contact",    label: "Contact" },
+      ].map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class="nav-mobile-link font-display text-4xl font-bold text-brand-muted hover:text-brand-cyan transition-colors duration-200"
+            data-cursor="hover"
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a
+      href="mailto:sairamlakshmanan2005@gmail.com"
+      class="font-mono-accent text-sm text-brand-cyan border border-brand-cyan px-6 py-3 rounded-lg"
+    >
+      sairamlakshmanan2005@gmail.com
+    </a>
+  </div>
+</nav>
+
+<script>
+  // Nav: scroll-aware background + mobile drawer toggle
+  const nav = document.getElementById('main-nav')!;
+  const hamburger = document.getElementById('nav-hamburger')!;
+  const drawer = document.getElementById('nav-drawer')!;
+
+  // Scroll-aware: add bg when scrolled
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) {
+        nav.classList.add('bg-brand-bg/90', 'backdrop-blur-md', 'border-b', 'border-brand-border');
+      } else {
+        nav.classList.remove('bg-brand-bg/90', 'backdrop-blur-md', 'border-b', 'border-brand-border');
+      }
+    },
+    { threshold: 0 }
+  );
+
+  const hero = document.getElementById('hero');
+  if (hero) observer.observe(hero);
+
+  // Mobile drawer toggle
+  function toggleDrawer(open: boolean) {
+    hamburger.setAttribute('aria-expanded', String(open));
+    drawer.setAttribute('aria-hidden', String(!open));
+    if (open) {
+      drawer.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawer.classList.add('translate-x-full');
+      document.body.style.overflow = '';
+    }
+  }
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+    toggleDrawer(!isOpen);
+  });
+
+  // Close drawer on nav link click
+  drawer.querySelectorAll<HTMLAnchorElement>('.nav-mobile-link').forEach((link) => {
+    link.addEventListener('click', () => toggleDrawer(false));
+  });
+</script>

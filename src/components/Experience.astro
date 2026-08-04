@@ -1,0 +1,212 @@
+---
+/**
+ * Experience.astro — Experience & Education section
+ * ─────────────────────────────────────────────────
+ * Design Direction: KINETIC / MOTION-FIRST
+ * Layout: Vertical timeline with animated connector line
+ *   (scroll-scrubbed via GSAP ScrollTrigger).
+ * Experience and Education rendered as alternating timeline nodes.
+ */
+import { experience, education } from '../data/content.js';
+---
+
+<section id="experience" class="relative py-28 md:py-36 overflow-hidden">
+  <!-- Background -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 60% 40% at 20% 60%, #C084FC04 0%, transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20">
+
+    <!-- Section header -->
+    <div class="mb-20 gsap-reveal" data-section="exp">
+      <p class="font-mono-accent text-brand-cyan text-sm tracking-[0.2em] mb-3">03 / experience</p>
+      <h2 class="font-display font-bold text-brand-text" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        My Journey
+      </h2>
+      <div class="section-line mt-4 max-w-xs"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+      <!-- Experience column -->
+      <div>
+        <h3 class="font-mono-accent text-brand-cyan text-xs tracking-widest uppercase mb-10 gsap-reveal-left" data-section="exp">
+          // work experience
+        </h3>
+
+        <div class="relative">
+          <!-- Timeline line -->
+          <div
+            class="absolute left-5 top-0 bottom-0 w-px bg-brand-border hidden sm:block"
+            aria-hidden="true"
+          >
+            <div id="exp-timeline-fill" class="w-full bg-gradient-to-b from-brand-cyan to-brand-lime" style="height: 0%;"></div>
+          </div>
+
+          <div class="space-y-12">
+            {experience.map((exp: any, i: number) => (
+              <div
+                class="exp-item relative pl-0 sm:pl-16 gsap-reveal-left"
+                data-section="exp"
+                style={`transition-delay: ${i * 0.1}s;`}
+              >
+                <!-- Timeline dot -->
+                <div
+                  class="absolute left-3.5 top-1.5 w-3 h-3 rounded-full border-2 border-brand-cyan bg-brand-bg hidden sm:block"
+                  aria-hidden="true"
+                ></div>
+
+                <div class="group p-6 rounded-2xl border border-brand-border bg-brand-surface hover:border-brand-cyan transition-all duration-300">
+                  <div class="flex flex-wrap gap-3 items-start justify-between mb-3">
+                    <div>
+                      <h4 class="font-display font-semibold text-brand-text text-lg leading-snug">
+                        {exp.role}
+                      </h4>
+                      <p class="font-display text-brand-cyan text-sm mt-0.5">{exp.company}</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                      <p class="font-mono-accent text-xs text-brand-muted">{exp.period}</p>
+                      <p class="font-mono-accent text-xs text-brand-muted mt-0.5">{exp.location}</p>
+                    </div>
+                  </div>
+
+                  <ul class="space-y-2 mt-4">
+                    {exp.bullets.map((bullet: string) => (
+                      <li class="flex gap-3 text-sm">
+                        <span class="text-brand-cyan mt-1 shrink-0 text-xs" aria-hidden="true">▸</span>
+                        <span class="font-display text-brand-muted leading-relaxed">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Education column -->
+      <div>
+        <h3 class="font-mono-accent text-brand-cyan text-xs tracking-widest uppercase mb-10 gsap-reveal-right" data-section="exp">
+          // education
+        </h3>
+
+        <div class="relative">
+          <!-- Timeline line -->
+          <div
+            class="absolute left-5 top-0 bottom-0 w-px bg-brand-border hidden sm:block"
+            aria-hidden="true"
+          >
+            <div id="edu-timeline-fill" class="w-full bg-gradient-to-b from-brand-lime to-brand-purple" style="height: 0%;"></div>
+          </div>
+
+          <div class="space-y-10">
+            {education.map((edu: any, i: number) => (
+              <div
+                class="edu-item relative pl-0 sm:pl-16 gsap-reveal-right"
+                data-section="exp"
+                style={`transition-delay: ${i * 0.15}s;`}
+              >
+                <!-- Timeline dot -->
+                <div
+                  class="absolute left-3.5 top-1.5 w-3 h-3 rounded-full border-2 border-brand-lime bg-brand-bg hidden sm:block"
+                  aria-hidden="true"
+                ></div>
+
+                <div class="group p-6 rounded-2xl border border-brand-border bg-brand-surface hover:border-brand-lime transition-all duration-300">
+                  <div class="flex flex-wrap gap-3 items-start justify-between mb-2">
+                    <h4 class="font-display font-semibold text-brand-text text-base leading-snug flex-1">
+                      {edu.institution}
+                    </h4>
+                    <span class="font-mono-accent text-xs text-brand-muted shrink-0">{edu.period}</span>
+                  </div>
+                  <p class="font-display text-brand-muted text-sm">{edu.degree}</p>
+                  <div class="flex items-center gap-3 mt-3">
+                    <span
+                      class="font-mono-accent text-sm font-medium px-3 py-1 rounded-full"
+                      style="background: #A8FF7811; color: #A8FF78; border: 1px solid #A8FF7833;"
+                    >
+                      {edu.score}
+                    </span>
+                    <span class="font-mono-accent text-xs text-brand-muted">{edu.location}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    // Animate timeline fills on scroll
+    gsap.to('#exp-timeline-fill', {
+      height: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#experience',
+        start: 'top 50%',
+        end: 'bottom 60%',
+        scrub: 1,
+      },
+    });
+    gsap.to('#edu-timeline-fill', {
+      height: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#experience',
+        start: 'top 50%',
+        end: 'bottom 60%',
+        scrub: 1.5,
+      },
+    });
+
+    // Reveal animations
+    gsap.utils.toArray<HTMLElement>('[data-section="exp"].gsap-reveal-left').forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: -40 },
+        {
+          opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        }
+      );
+    });
+    gsap.utils.toArray<HTMLElement>('[data-section="exp"].gsap-reveal-right').forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: 40 },
+        {
+          opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        }
+      );
+    });
+    gsap.utils.toArray<HTMLElement>('[data-section="exp"].gsap-reveal').forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        }
+      );
+    });
+  } else {
+    document.querySelectorAll<HTMLElement>('.gsap-reveal, .gsap-reveal-left, .gsap-reveal-right').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    const fillEls = document.querySelectorAll<HTMLElement>('#exp-timeline-fill, #edu-timeline-fill');
+    fillEls.forEach((el) => { el.style.height = '100%'; });
+  }
+</script>

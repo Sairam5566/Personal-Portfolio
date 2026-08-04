@@ -1,0 +1,324 @@
+---
+/**
+ * Contact.astro — Contact section
+ * ─────────────────────────────────
+ * Design Direction: KINETIC / MOTION-FIRST
+ * Form: supports Web3Forms and Formspree endpoints dynamically via .env,
+ * with fallback to mailto link if API credentials are not set.
+ */
+import { personal } from '../data/content.js';
+
+const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID || '';
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || '';
+const recipientEmail = personal.email;
+---
+
+<section id="contact" class="relative py-28 md:py-36 overflow-hidden">
+  <!-- Background glow -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 80% 50% at 50% 100%, #00E5CC06 0%, transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20">
+
+    <!-- Section header -->
+    <div class="mb-16 gsap-reveal" data-section="contact">
+      <p class="font-mono-accent text-brand-cyan text-sm tracking-[0.2em] mb-3">04 / contact</p>
+      <h2 class="font-display font-bold text-brand-text" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        Let's Work Together
+      </h2>
+      <div class="section-line mt-4 max-w-xs"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+      <!-- Left: message + social links -->
+      <div class="space-y-10 gsap-reveal-left" data-section="contact">
+        <div class="space-y-4">
+          <p class="font-display text-brand-text text-xl leading-relaxed">
+            I'm actively looking for full-time and internship opportunities. Whether you have a role in mind, a project to collaborate on, or just want to say hi — my inbox is always open.
+          </p>
+          <p class="font-display text-brand-muted leading-relaxed">
+            I respond to all genuine messages within 24 hours.
+          </p>
+        </div>
+
+        <!-- Direct email CTA -->
+        <a
+          href={`mailto:${personal.email}`}
+          class="magnetic group inline-flex items-center gap-3 font-mono-accent text-brand-cyan border border-brand-cyan rounded-xl px-6 py-4 hover:bg-brand-cyan hover:text-brand-bg transition-all duration-300"
+          data-cursor="hover"
+          aria-label={`Email ${personal.email}`}
+        >
+          <span class="magnetic-inner flex items-center gap-3">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            {personal.email}
+          </span>
+        </a>
+
+        <!-- Social links -->
+        <div class="space-y-4">
+          <p class="font-mono-accent text-brand-muted text-xs tracking-widest uppercase">// find me on</p>
+          <div class="flex flex-col gap-3">
+            {[
+              {
+                href: personal.linkedin,
+                icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+                label: "LinkedIn",
+                handle: "Sairam Lakshmanan",
+              },
+              {
+                href: personal.github,
+                icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>`,
+                label: "GitHub",
+                handle: "sairam-lakshmanan",
+              },
+              {
+                href: personal.leetcode,
+                icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>`,
+                label: "LeetCode",
+                handle: "130+ problems solved",
+              },
+            ].map(({ href, icon, label, handle }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center gap-4 p-4 rounded-xl border border-brand-border bg-brand-surface hover:border-brand-cyan transition-all duration-300"
+                data-cursor="hover"
+                aria-label={`Visit ${label} profile`}
+              >
+                <span class="text-brand-muted group-hover:text-brand-cyan transition-colors duration-200" set:html={icon}></span>
+                <div>
+                  <p class="font-display text-brand-text text-sm font-medium">{label}</p>
+                  <p class="font-mono-accent text-brand-muted text-xs">{handle}</p>
+                </div>
+                <svg class="w-4 h-4 text-brand-muted group-hover:text-brand-cyan ml-auto transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Contact form -->
+      <div class="gsap-reveal-right" data-section="contact">
+        <div class="p-8 rounded-2xl border border-brand-border bg-brand-surface relative overflow-hidden">
+          <!-- Corner glow -->
+          <div
+            class="absolute -top-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
+            style="background: radial-gradient(circle, #00E5CC0C 0%, transparent 70%);"
+            aria-hidden="true"
+          ></div>
+
+          <h3 class="font-display font-semibold text-brand-text text-xl mb-6">Send a Message</h3>
+
+          <form
+            id="contact-form"
+            action={formspreeId ? `https://formspree.io/f/${formspreeId}` : (web3formsKey ? "https://api.web3forms.com/submit" : `mailto:${recipientEmail}`)}
+            method="POST"
+            data-formspree-id={formspreeId}
+            data-web3forms-key={web3formsKey}
+            data-recipient-email={recipientEmail}
+            class="space-y-5"
+            novalidate
+          >
+            {web3formsKey && <input type="hidden" name="access_key" value={web3formsKey} />}
+            <!-- Name -->
+            <div class="form-group">
+              <label for="contact-name" class="font-mono-accent text-xs text-brand-muted tracking-wider block mb-2">
+                name <span class="text-brand-cyan">*</span>
+              </label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                required
+                placeholder="Your name"
+                class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-brand-border text-brand-text font-display text-sm placeholder-brand-dim focus:border-brand-cyan focus:outline-none transition-colors duration-200"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="contact-email" class="font-mono-accent text-xs text-brand-muted tracking-wider block mb-2">
+                email <span class="text-brand-cyan">*</span>
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                required
+                placeholder="your@email.com"
+                class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-brand-border text-brand-text font-display text-sm placeholder-brand-dim focus:border-brand-cyan focus:outline-none transition-colors duration-200"
+              />
+            </div>
+
+            <!-- Subject -->
+            <div class="form-group">
+              <label for="contact-subject" class="font-mono-accent text-xs text-brand-muted tracking-wider block mb-2">
+                subject
+              </label>
+              <input
+                type="text"
+                id="contact-subject"
+                name="subject"
+                placeholder="What's this about?"
+                class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-brand-border text-brand-text font-display text-sm placeholder-brand-dim focus:border-brand-cyan focus:outline-none transition-colors duration-200"
+              />
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+              <label for="contact-message" class="font-mono-accent text-xs text-brand-muted tracking-wider block mb-2">
+                message <span class="text-brand-cyan">*</span>
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                rows="5"
+                placeholder="Tell me what you have in mind..."
+                class="w-full px-4 py-3 rounded-xl bg-brand-bg border border-brand-border text-brand-text font-display text-sm placeholder-brand-dim focus:border-brand-cyan focus:outline-none transition-colors duration-200 resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              id="contact-submit"
+              class="magnetic w-full group relative py-3.5 font-mono-accent text-sm font-medium text-brand-bg bg-brand-cyan rounded-xl overflow-hidden glow-cyan transition-all duration-300"
+              data-cursor="hover"
+            >
+              <span class="magnetic-inner relative z-10 flex items-center justify-center gap-2">
+                <span id="submit-label">send message →</span>
+              </span>
+              <span class="absolute inset-0 bg-brand-lime scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"></span>
+            </button>
+
+            <!-- Status message -->
+            <p id="form-status" class="font-mono-accent text-xs text-center hidden" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    gsap.utils.toArray<HTMLElement>('[data-section="contact"].gsap-reveal-left').forEach((el) => {
+      gsap.fromTo(el, { opacity: 0, x: -40 }, {
+        opacity: 1, x: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      });
+    });
+    gsap.utils.toArray<HTMLElement>('[data-section="contact"].gsap-reveal-right').forEach((el) => {
+      gsap.fromTo(el, { opacity: 0, x: 40 }, {
+        opacity: 1, x: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      });
+    });
+    gsap.utils.toArray<HTMLElement>('[data-section="contact"].gsap-reveal').forEach((el) => {
+      gsap.fromTo(el, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      });
+    });
+
+    // Input focus glow effect
+    document.querySelectorAll<HTMLElement>('input, textarea').forEach((el) => {
+      el.addEventListener('focus', () => {
+        gsap.to(el, { borderColor: '#00E5CC', duration: 0.2 });
+      });
+      el.addEventListener('blur', () => {
+        gsap.to(el, { borderColor: '#1E2828', duration: 0.3 });
+      });
+    });
+  } else {
+    document.querySelectorAll<HTMLElement>('.gsap-reveal, .gsap-reveal-left, .gsap-reveal-right').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  }
+
+  // Dynamic Contact Form handling with Formspree / Web3Forms AJAX submission
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const statusEl = document.getElementById('form-status');
+  const submitLabel = document.getElementById('submit-label');
+
+  if (form && statusEl && submitLabel) {
+    const formspreeId = form.dataset.formspreeId || '';
+    const web3formsKey = form.dataset.web3formsKey || '';
+
+    form.addEventListener('submit', async (e: Event) => {
+      e.preventDefault();
+
+      const nameInput = form.querySelector<HTMLInputElement>('#contact-name');
+      const emailInput = form.querySelector<HTMLInputElement>('#contact-email');
+      const messageInput = form.querySelector<HTMLTextAreaElement>('#contact-message');
+      const subjectInput = form.querySelector<HTMLInputElement>('#contact-subject');
+
+      const name = nameInput?.value.trim() || '';
+      const email = emailInput?.value.trim() || '';
+      const subject = subjectInput?.value.trim() || 'New Portfolio Message';
+      const message = messageInput?.value.trim() || '';
+
+      if (!name || !email || !message) {
+        statusEl.textContent = 'Please fill out all required fields (*).';
+        statusEl.className = 'font-mono-accent text-xs text-center text-red-400 block mt-3';
+        return;
+      }
+
+      submitLabel.textContent = 'sending...';
+      statusEl.className = 'font-mono-accent text-xs text-center hidden';
+
+      try {
+        const formData = new FormData(form);
+        
+        let endpoint = form.action;
+        if (web3formsKey) {
+          endpoint = 'https://api.web3forms.com/submit';
+          if (!formData.has('access_key')) {
+            formData.append('access_key', web3formsKey);
+          }
+        } else if (formspreeId && formspreeId !== 'YOUR_FORM_ID') {
+          endpoint = `https://formspree.io/f/${formspreeId}`;
+        }
+
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: formData,
+          headers: { Accept: 'application/json' },
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (response.ok && (result.success !== false)) {
+          statusEl.textContent = '✓ Message sent! I\'ll get back to you soon.';
+          statusEl.className = 'font-mono-accent text-xs text-center text-brand-lime block mt-3';
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Form submission failed');
+        }
+      } catch {
+        statusEl.textContent = '✗ Form submission failed. Please check your email service access key.';
+        statusEl.className = 'font-mono-accent text-xs text-center text-red-400 block mt-3';
+      } finally {
+        submitLabel.textContent = 'send message →';
+      }
+    });
+  }
+</script>
+

@@ -1,0 +1,62 @@
+---
+/**
+ * Footer.astro — Minimal on-brand footer
+ * Kinetic design: simple, clean, with a glowing separator line.
+ */
+import { personal } from '../data/content.js';
+const year = new Date().getFullYear();
+---
+
+<footer class="relative border-t border-brand-border py-10 overflow-hidden" role="contentinfo">
+  <!-- Subtle glow on the top border -->
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px pointer-events-none"
+    style="background: linear-gradient(90deg, transparent, #00E5CC66, transparent);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20 flex flex-col sm:flex-row items-center justify-between gap-4">
+
+    <!-- Left: Monogram + copyright -->
+    <div class="flex items-center gap-3">
+      <a
+        href="#hero"
+        class="font-display font-bold text-brand-cyan text-lg hover:text-brand-lime transition-colors duration-200"
+        aria-label="Back to top"
+      >
+        SL
+      </a>
+      <span class="text-brand-border">|</span>
+      <p class="font-mono-accent text-brand-muted text-xs">
+        © {year} Sairam Lakshmanan. All rights reserved.
+      </p>
+    </div>
+
+    <!-- Right: Quick social + "Built with" -->
+    <div class="flex items-center gap-6">
+      <a
+        href={personal.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-mono-accent text-brand-muted text-xs hover:text-brand-cyan transition-colors duration-200"
+        data-cursor="hover"
+        aria-label="GitHub"
+      >
+        GitHub
+      </a>
+      <a
+        href={personal.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-mono-accent text-brand-muted text-xs hover:text-brand-cyan transition-colors duration-200"
+        data-cursor="hover"
+        aria-label="LinkedIn"
+      >
+        LinkedIn
+      </a>
+      <span class="font-mono-accent text-brand-dim text-xs hidden sm:inline">
+        Built with Astro + GSAP
+      </span>
+    </div>
+  </div>
+</footer>

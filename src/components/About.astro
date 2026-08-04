@@ -1,0 +1,247 @@
+---
+/**
+ * About.astro — About section
+ * ─────────────────────────────
+ * Design Direction: KINETIC / MOTION-FIRST
+ * Features:
+ *   - Split layout (bio left, skills right)
+ *   - Skills rendered as interactive tag pills with staggered entrance
+ *   - Achievements strip with scroll reveal
+ *   - Inline monogram "SL" as decorative typographic element
+ */
+import { personal, skills, achievements } from '../data/content.js';
+
+// Group skills by category
+const categories = [...new Set(skills.map((s: any) => s.category))];
+---
+
+<section id="about" class="relative py-28 md:py-36 overflow-hidden">
+  <!-- Section background accent -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 80% 50% at 50% 0%, #00E5CC06 0%, transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20">
+
+    <!-- Section header -->
+    <div class="mb-16 gsap-reveal" data-section="about">
+      <p class="font-mono-accent text-brand-cyan text-sm tracking-[0.2em] mb-3">01 / about</p>
+      <h2 class="font-display font-bold text-brand-text" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        Who I Am
+      </h2>
+      <div class="section-line mt-4 max-w-xs"></div>
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+
+      <!-- Left: Bio + achievements -->
+      <div class="space-y-10">
+
+        <!-- Decorative large initials -->
+        <div class="relative overflow-hidden gsap-reveal-left" data-section="about">
+          <span
+            class="absolute -top-4 -left-6 font-display font-bold text-[7rem] leading-none select-none pointer-events-none z-0"
+            style="color: #161C1C;"
+            aria-hidden="true"
+          >SL</span>
+          <div class="relative z-10 pt-2">
+            <p class="font-display text-brand-text text-lg leading-relaxed">
+              {personal.bio}
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick facts -->
+        <div class="gsap-reveal-left" data-section="about" style="transition-delay: 0.1s;">
+          <ul class="space-y-3">
+            {[
+              { label: "currently at", value: "SRM Institute of Science and Technology" },
+              { label: "degree",       value: "B.Tech CSE with Cloud Computing (2023–2027)" },
+              { label: "based in",     value: "Chennai, India" },
+              { label: "seeking",      value: "Full-time / Internship opportunities" },
+            ].map(({ label, value }) => (
+              <li class="flex gap-3 font-mono-accent text-sm">
+                <span class="text-brand-muted w-28 shrink-0">{label}</span>
+                <span class="text-brand-muted">→</span>
+                <span class="text-brand-text">{value}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Achievements -->
+        <div class="gsap-reveal-left" data-section="about" style="transition-delay: 0.2s;">
+          <h3 class="font-mono-accent text-brand-cyan text-xs tracking-widest mb-4 uppercase">
+            Achievements
+          </h3>
+          <div class="space-y-3">
+            {achievements.map((ach: any) => (
+              <div class="flex items-start gap-3 group">
+                <span class="text-brand-cyan mt-0.5 shrink-0" aria-hidden="true">▸</span>
+                <div>
+                  {ach.link ? (
+                    <a
+                      href={ach.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-display text-brand-text text-sm hover:text-brand-cyan transition-colors duration-200"
+                      data-cursor="hover"
+                    >
+                      {ach.title}
+                    </a>
+                  ) : (
+                    <p class="font-display text-brand-text text-sm">{ach.title}</p>
+                  )}
+                  <p class="font-mono-accent text-brand-muted text-xs mt-0.5">{ach.date}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Skills by category -->
+      <div class="space-y-10 gsap-reveal-right" data-section="about">
+        <h3 class="font-mono-accent text-brand-cyan text-xs tracking-widest uppercase">
+          Skills &amp; Technologies
+        </h3>
+
+        {categories.map((cat: any) => (
+          <div class="skill-category" data-category={cat}>
+            <p class="font-mono-accent text-brand-muted text-xs mb-3 tracking-wider">
+              // {(cat as string).toLowerCase()}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {skills
+                .filter((s: any) => s.category === cat)
+                .map((skill: any) => (
+                  <div
+                    class="skill-pill group flex items-center gap-2 px-4 py-2 rounded-lg border border-brand-border bg-brand-surface hover:border-brand-cyan hover:bg-brand-surfaceHi cursor-default transition-all duration-200"
+                    data-cursor="hover"
+                    title={skill.name}
+                  >
+                    <span class="text-base group-hover:scale-125 transition-transform duration-200 inline-block" aria-hidden="true">
+                      {skill.icon}
+                    </span>
+                    <span class="font-mono-accent text-sm text-brand-muted group-hover:text-brand-text transition-colors duration-200">
+                      {skill.name}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        ))}
+
+        <!-- Decorative skill meter bars -->
+        <div class="space-y-4 pt-4 border-t border-brand-border">
+          <p class="font-mono-accent text-brand-muted text-xs tracking-wider">// proficiency</p>
+          {[
+            { name: "Python / FastAPI", pct: 88 },
+            { name: "React / JavaScript", pct: 80 },
+            { name: "Java / ASP.NET Core", pct: 75 },
+            { name: "SQL / MongoDB", pct: 82 },
+          ].map(({ name, pct }) => (
+            <div class="skill-bar-wrap">
+              <div class="flex justify-between mb-1">
+                <span class="font-mono-accent text-xs text-brand-muted">{name}</span>
+                <span class="font-mono-accent text-xs text-brand-cyan">{pct}%</span>
+              </div>
+              <div class="h-0.5 bg-brand-border rounded-full overflow-hidden">
+                <div
+                  class="skill-bar h-full rounded-full"
+                  style={`width: 0%; background: linear-gradient(90deg, #00E5CC, #A8FF78);`}
+                  data-pct={pct}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    // Reveal left/right items
+    gsap.utils.toArray<HTMLElement>('[data-section="about"].gsap-reveal-left').forEach((el, i) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: -40 },
+        {
+          opacity: 1, x: 0, duration: 0.7, delay: i * 0.1, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        }
+      );
+    });
+
+    gsap.utils.toArray<HTMLElement>('[data-section="about"].gsap-reveal-right').forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, x: 40 },
+        {
+          opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        }
+      );
+    });
+
+    gsap.utils.toArray<HTMLElement>('[data-section="about"].gsap-reveal').forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        }
+      );
+    });
+
+    // Skill pill stagger
+    ScrollTrigger.create({
+      trigger: '#about',
+      start: 'top 60%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo(
+          '.skill-pill',
+          { opacity: 0, y: 15, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.04, ease: 'back.out(1.4)' }
+        );
+      },
+    });
+
+    // Animate skill bars
+    ScrollTrigger.create({
+      trigger: '.skill-bar-wrap',
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        document.querySelectorAll<HTMLElement>('.skill-bar').forEach((bar) => {
+          const pct = bar.getAttribute('data-pct') || '0';
+          gsap.to(bar, {
+            width: pct + '%',
+            duration: 1.2,
+            ease: 'power3.out',
+          });
+        });
+      },
+    });
+  } else {
+    // Reduced motion: just show everything
+    document.querySelectorAll<HTMLElement>('.skill-bar').forEach((bar) => {
+      const pct = bar.getAttribute('data-pct') || '0';
+      bar.style.width = pct + '%';
+    });
+    document.querySelectorAll<HTMLElement>('.gsap-reveal, .gsap-reveal-left, .gsap-reveal-right').forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  }
+</script>

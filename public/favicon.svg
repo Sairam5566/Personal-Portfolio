@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Background -->
+  <rect width="64" height="64" rx="14" fill="#111414"/>
+  <!-- Border glow -->
+  <rect width="64" height="64" rx="14" fill="none" stroke="#00E5CC" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Monogram "SL" -->
+  <text
+    x="8" y="46"
+    font-family="'Space Grotesk', 'Arial', sans-serif"
+    font-weight="700"
+    font-size="32"
+    fill="#00E5CC"
+    letter-spacing="-1"
+  >SL</text>
+  <!-- Accent dot -->
+  <circle cx="54" cy="12" r="4" fill="#A8FF78"/>
+</svg>

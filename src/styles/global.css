@@ -1,0 +1,291 @@
+/*
+ * ============================================================
+ * GLOBAL STYLES — KINETIC/MOTION-FIRST PORTFOLIO
+ * ============================================================
+ * Tailwind v4 CSS-first configuration.
+ * All brand tokens, custom utilities, and animations live here.
+ *
+ * CRITICAL: In Tailwind v4, all utilities live inside @layer.
+ * Custom CSS MUST go in @layer base (or @layer components)
+ * so that utility classes can properly override them.
+ * Unlayered CSS ALWAYS beats layered CSS — never put resets
+ * or base styles outside a @layer block.
+ *
+ * HOW TO CHANGE COLORS: Edit the @theme block below.
+ * HOW TO CHANGE FONTS:  Edit @theme font-family values + the Google Fonts URL.
+ * ============================================================
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+@import "tailwindcss";
+
+/* ── Tailwind v4 Theme Tokens ────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-brand-bg:        #0D0F0F;
+  --color-brand-surface:   #111414;
+  --color-brand-surfaceHi: #161C1C;
+  --color-brand-border:    #1E2828;
+  --color-brand-dim:       #2A3A3A;
+  --color-brand-cyan:      #00E5CC;
+  --color-brand-lime:      #A8FF78;
+  --color-brand-purple:    #C084FC;
+  --color-brand-text:      #E8F5F4;
+  --color-brand-muted:     #5A7070;
+
+  /* Fonts */
+  --font-display:      'Space Grotesk', sans-serif;
+  --font-mono-accent:  'DM Mono', monospace;
+
+  /* Background patterns */
+  --background-image-grid-pattern:
+    linear-gradient(rgba(0,229,204,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,204,0.04) 1px, transparent 1px);
+  --background-size-grid-sm: 40px 40px;
+  --background-size-grid-lg: 80px 80px;
+}
+
+/* ── Custom Utilities (Tailwind v4 @utility syntax) ──────── */
+@utility font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+@utility font-mono-accent {
+  font-family: 'DM Mono', monospace;
+}
+
+@utility noise-bg {
+  position: relative;
+}
+
+@utility section-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #1E2828 30%, #00E5CC33 60%, transparent);
+}
+
+@utility glow-cyan {
+  box-shadow: 0 0 20px #00E5CC22, 0 0 60px #00E5CC11;
+}
+
+@utility magnetic {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@utility gsap-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@utility gsap-reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+@utility gsap-reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+@utility tag-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #1E2828;
+  color: #5A7070;
+  background-color: #111414;
+  transition: all 0.15s ease;
+}
+
+/* ============================================================
+ * BASE STYLES — inside @layer base so Tailwind utilities
+ * can override them (px-8, mx-auto, gap-16, etc.)
+ * ============================================================ */
+@layer base {
+  /* Custom Properties */
+  :root {
+    --cursor-size: 12px;
+    --cursor-border: 36px;
+    --transition-fast: 0.15s ease;
+    --transition-med: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-slow: 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #0D0F0F;
+    color: #E8F5F4;
+    font-family: 'Space Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #0D0F0F;
+    min-height: 100vh;
+    cursor: none;
+  }
+
+  /* Restore cursor on touch/mobile */
+  @media (pointer: coarse) {
+    body { cursor: auto; }
+  }
+
+  /* Selection */
+  ::selection {
+    background: #00E5CC33;
+    color: #E8F5F4;
+  }
+}
+
+/* ============================================================
+ * COMPONENT STYLES — inside @layer components so utilities
+ * still override them, but they override base styles.
+ * ============================================================ */
+@layer components {
+  /* ── Custom Scrollbar ────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #0D0F0F; }
+  ::-webkit-scrollbar-thumb {
+    background: #00E5CC44;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #00E5CC; }
+
+  /* ── Custom Cursor ───────────────────────────────────────── */
+  #cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    background: #00E5CC;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width var(--transition-fast), height var(--transition-fast), background var(--transition-fast);
+    mix-blend-mode: difference;
+  }
+
+  #cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--cursor-border);
+    height: var(--cursor-border);
+    border: 1.5px solid #00E5CC66;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  }
+
+  body.cursor-hover #cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #A8FF78;
+  }
+  body.cursor-hover #cursor-ring {
+    width: 52px;
+    height: 52px;
+    border-color: #A8FF78;
+  }
+
+  /* ── Noise texture (::before on .noise-bg elements) ─────── */
+  .noise-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Glow hover ─────────────────────────────────────────── */
+  .glow-cyan:hover {
+    box-shadow: 0 0 30px #00E5CC44, 0 0 80px #00E5CC22;
+    transition: box-shadow 0.4s ease;
+  }
+
+  /* ── Tag pill hover ──────────────────────────────────────── */
+  .tag-pill:hover {
+    border-color: #00E5CC;
+    color: #00E5CC;
+    background: #00E5CC11;
+  }
+
+  /* ── Glitch text effect ──────────────────────────────────── */
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  .glitch:hover::before {
+    animation: glitch-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    color: #00E5CC;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translate(-3px, -2px);
+    opacity: 0.8;
+  }
+  .glitch:hover::after {
+    animation: glitch-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    color: #A8FF78;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translate(3px, 2px);
+    opacity: 0.8;
+  }
+}
+
+/* ── Keyframes (these are fine outside layers) ───────────── */
+@keyframes glitch-1 {
+  0%   { transform: translate(-3px, -2px); }
+  20%  { transform: translate(3px, 2px); }
+  40%  { transform: translate(-2px, 3px); }
+  60%  { transform: translate(2px, -2px); }
+  80%  { transform: translate(-1px, 1px); }
+  100% { transform: translate(0); }
+}
+@keyframes glitch-2 {
+  0%   { transform: translate(3px, 2px); }
+  20%  { transform: translate(-3px, -2px); }
+  40%  { transform: translate(2px, -3px); }
+  60%  { transform: translate(-2px, 2px); }
+  80%  { transform: translate(1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+/* ── Reduced Motion ──────────────────────────────────────── */
+/* NOTE: Using @layer base so this doesn't override utility classes */
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .gsap-reveal,
+    .gsap-reveal-left,
+    .gsap-reveal-right {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    #cursor-dot, #cursor-ring { display: none !important; }
+    body { cursor: auto !important; }
+  }
+}
