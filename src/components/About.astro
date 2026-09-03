@@ -27,7 +27,7 @@ const categories = [...new Set(skills.map((s: any) => s.category))];
 
     <!-- Section header -->
     <div class="mb-16 gsap-reveal" data-section="about">
-      <p class="font-mono-accent text-brand-cyan text-sm tracking-[0.2em] mb-3">01 / about</p>
+
       <h2 class="font-display font-bold text-brand-text" style="font-size: clamp(2rem, 5vw, 3.5rem);">
         Who I Am
       </h2>
@@ -112,7 +112,7 @@ const categories = [...new Set(skills.map((s: any) => s.category))];
         {categories.map((cat: any) => (
           <div class="skill-category" data-category={cat}>
             <p class="font-mono-accent text-brand-muted text-xs mb-3 tracking-wider">
-              // {(cat as string).toLowerCase()}
+              --> {(cat as string).toLowerCase()}
             </p>
             <div class="flex flex-wrap gap-2">
               {skills
