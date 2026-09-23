@@ -43,14 +43,44 @@ import { personal } from "../data/content.js";
 
   <!-- Hero content wrapper: two-column layout on lg+ screens -->
   <div
-    class="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20 pt-28 pb-24 lg:pt-0 lg:pb-0 min-h-screen flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16"
+    class="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20 pt-28 pb-24 lg:pt-0 lg:pb-0 min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16"
   >
+    <!-- Mobile photo (visible only on < lg) -->
+    <div class="flex lg:hidden items-center justify-center w-full" id="hero-photo-mobile">
+      <div class="relative w-36 h-36 sm:w-44 sm:h-44 group">
+        <!-- Outer Glowing Aura -->
+        <div
+          class="absolute -inset-3 rounded-full bg-gradient-to-r from-brand-cyan via-brand-lime to-purple-500 opacity-25 blur-lg pointer-events-none"
+        ></div>
+        <!-- Glowing Gradient Ring -->
+        <div
+          class="relative w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-brand-cyan via-brand-lime to-purple-400 shadow-xl"
+        >
+          <div
+            class="w-full h-full rounded-full bg-brand-surface overflow-hidden relative"
+          >
+            <img
+              src="/Profile.png"
+              alt="Sairam Lakshmanan"
+              class="w-full h-full object-cover object-top rounded-full"
+            />
+          </div>
+        </div>
+        <!-- Decorative badge -->
+        <div
+          class="absolute -bottom-1 -right-1 px-2.5 py-0.5 rounded-full bg-brand-bg/90 border border-brand-cyan/40 backdrop-blur-md text-brand-cyan font-mono-accent text-[9px] tracking-wider shadow-lg pointer-events-none"
+        >
+          AVAILABLE
+        </div>
+      </div>
+    </div>
+
     <!-- Left column: text content -->
-    <div class="flex-1 max-w-2xl w-full">
+    <div class="flex-1 max-w-2xl w-full text-center lg:text-left">
       <!-- Name with scramble effect -->
       <h1
         class="font-display font-bold text-brand-text mb-5 leading-none tracking-tight"
-        style="font-size: clamp(3rem, 7vw, 6.5rem);"
+        style="font-size: clamp(2.6rem, 7vw, 6.5rem);"
       >
         <span
           id="scramble-text"
@@ -62,7 +92,7 @@ import { personal } from "../data/content.js";
       </h1>
 
       <!-- Role cycling -->
-      <div class="flex items-center gap-3 mb-5 gsap-reveal">
+      <div class="flex items-center justify-center lg:justify-start gap-3 mb-5 gsap-reveal">
         <span class="text-brand-muted font-mono-accent text-sm">//</span>
         <div class="overflow-hidden h-8">
           <p
@@ -76,13 +106,13 @@ import { personal } from "../data/content.js";
 
       <!-- Tagline -->
       <p
-        class="font-display text-brand-muted text-lg md:text-xl max-w-lg mb-10 leading-relaxed gsap-reveal"
+        class="font-display text-brand-muted text-lg md:text-xl max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed gsap-reveal"
       >
         I build systems that scale and interfaces that matter.
       </p>
 
       <!-- CTAs -->
-      <div class="flex flex-wrap gap-4 mb-14 gsap-reveal">
+      <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-12 gsap-reveal">
         <a
           href="#projects"
           class="magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-bg bg-brand-cyan rounded-lg overflow-hidden glow-cyan transition-all duration-300"
@@ -116,14 +146,14 @@ import { personal } from "../data/content.js";
       </div>
 
       <!-- Stat counters -->
-      <div class="flex gap-10 pt-6 border-t border-brand-border gsap-reveal">
+      <div class="flex flex-wrap justify-center lg:justify-start gap-8 sm:gap-10 pt-6 border-t border-brand-border gsap-reveal">
         {
           [
             { value: "3+", label: "Projects Built" },
             { value: "8.67", label: "CGPA" },
             { value: "130+", label: "LeetCode Problems" },
           ].map(({ value, label }) => (
-            <div class="group">
+            <div class="group text-center lg:text-left">
               <div class="font-display text-3xl font-bold text-brand-cyan group-hover:text-brand-lime transition-colors duration-300">
                 {value}
               </div>
@@ -136,7 +166,7 @@ import { personal } from "../data/content.js";
       </div>
     </div>
 
-    <!-- Right column: Interactive Photo Frame -->
+    <!-- Right column: Interactive Photo Frame (desktop only) -->
     <div
       class="shrink-0 hidden lg:flex items-center justify-center group"
       id="hero-photo-wrap"
@@ -167,8 +197,7 @@ import { personal } from "../data/content.js";
             >
             </div>
 
-            <!-- Profile image / fallback -->
-            <!-- To use your photo, add image file to public/photo.jpg and update src below -->
+            <!-- Profile image -->
             <div
               class="w-full h-full flex flex-col items-center justify-center gap-2 text-brand-muted transition-transform duration-500 ease-out group-hover:scale-105"
               id="photo-content"
@@ -233,11 +262,18 @@ import { personal } from "../data/content.js";
       );
     });
 
-    // Photo wrap entrance
+    // Desktop photo wrap entrance
     gsap.fromTo(
       "#hero-photo-wrap",
       { opacity: 0, x: 40 },
       { opacity: 1, x: 0, duration: 1.0, delay: 0.3, ease: "power3.out" },
+    );
+
+    // Mobile photo entrance
+    gsap.fromTo(
+      "#hero-photo-mobile",
+      { opacity: 0, scale: 0.85 },
+      { opacity: 1, scale: 1, duration: 0.9, delay: 0.2, ease: "back.out(1.4)" },
     );
 
     // 3D Tilt & Magnetic Hover Animation for Photo Frame
