@@ -1,238 +1,92 @@
 ---
 /**
- * Hero.astro — Landing section
- * ─────────────────────────────
- * Design Direction: KINETIC / MOTION-FIRST
- *
- * Signature interactions:
- *   1. Text-scramble effect on name (letters cycle through random chars)
- *   2. Role text cycles through titles
- *   3. Animated grid background that subtly shifts on scroll
- *   4. CTA buttons are magnetic
- *   5. Scroll indicator with animated arrow
+ * Hero.astro — Landing section (Clean Centered Layout)
  */
 import { personal } from "../data/content.js";
 ---
 
-<section
-  id="hero"
-  class="relative min-h-screen flex items-center overflow-hidden noise-bg"
->
+<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden noise-bg">
   <!-- Animated grid background -->
-  <div
-    class="absolute inset-0 bg-grid-pattern bg-grid-lg opacity-100"
-    aria-hidden="true"
-    id="hero-grid"
-  >
-  </div>
+  <div class="absolute inset-0 bg-grid-pattern bg-grid-lg opacity-100" aria-hidden="true" id="hero-grid"></div>
 
   <!-- Radial glow blobs -->
-  <div
-    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
-    style="background: radial-gradient(circle, #00E5CC08 0%, transparent 70%);"
-    aria-hidden="true"
-    id="hero-glow"
-  >
-  </div>
-  <div
-    class="absolute top-20 right-10 w-64 h-64 rounded-full pointer-events-none"
-    style="background: radial-gradient(circle, #A8FF7808 0%, transparent 70%);"
-    aria-hidden="true"
-  >
-  </div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style="background: radial-gradient(circle, #00E5CC08 0%, transparent 70%);" aria-hidden="true" id="hero-glow"></div>
+  <div class="absolute top-20 right-10 w-64 h-64 rounded-full pointer-events-none" style="background: radial-gradient(circle, #A8FF7806 0%, transparent 70%);" aria-hidden="true"></div>
 
-  <!-- Hero content wrapper: two-column layout on lg+ screens -->
-  <div
-    class="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12 lg:px-16 xl:px-20 pt-28 pb-24 lg:pt-0 lg:pb-0 min-h-screen flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16"
-  >
-    <!-- Mobile photo (visible only on < lg) -->
-    <div class="flex lg:hidden items-center justify-center w-full" id="hero-photo-mobile">
-      <div class="relative w-36 h-36 sm:w-44 sm:h-44 group">
-        <!-- Outer Glowing Aura -->
-        <div
-          class="absolute -inset-3 rounded-full bg-gradient-to-r from-brand-cyan via-brand-lime to-purple-500 opacity-25 blur-lg pointer-events-none"
-        ></div>
-        <!-- Glowing Gradient Ring -->
-        <div
-          class="relative w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-brand-cyan via-brand-lime to-purple-400 shadow-xl"
-        >
-          <div
-            class="w-full h-full rounded-full bg-brand-surface overflow-hidden relative"
-          >
-            <img
-              src="/Profile.png"
-              alt="Sairam Lakshmanan"
-              class="w-full h-full object-cover object-top rounded-full"
-            />
-          </div>
+  <!-- Hero content — fully centered column -->
+  <div class="relative z-10 flex flex-col items-center text-center w-full max-w-4xl mx-auto px-6 pt-28 pb-16">
+
+    <!-- Portrait -->
+    <div class="relative mb-8 group" id="photo-container" style="width: clamp(160px, 22vw, 240px); aspect-ratio: 1;">
+      <!-- Glow Aura -->
+      <div class="absolute -inset-3 rounded-full bg-gradient-to-r from-brand-cyan via-brand-lime to-purple-500 opacity-20 blur-xl pointer-events-none group-hover:opacity-40 transition-opacity duration-500"></div>
+      <!-- Gradient Ring & Image -->
+      <div class="relative w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-brand-cyan via-brand-lime to-purple-400 shadow-[0_0_32px_rgba(0,229,204,0.2)]" id="photo-frame">
+        <div class="w-full h-full rounded-full bg-brand-surface overflow-hidden">
+          <img src="/Profile.png" alt="Sairam Lakshmanan" class="w-full h-full object-cover object-top rounded-full" />
         </div>
-        <!-- Decorative badge -->
-        <div
-          class="absolute -bottom-1 -right-1 px-2.5 py-0.5 rounded-full bg-brand-bg/90 border border-brand-cyan/40 backdrop-blur-md text-brand-cyan font-mono-accent text-[9px] tracking-wider shadow-lg pointer-events-none"
-        >
-          AVAILABLE
-        </div>
+      </div>
+      <!-- Badge -->
+      <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-4 py-1 rounded-full bg-brand-bg/95 border border-brand-cyan/40 backdrop-blur-md text-brand-cyan font-mono-accent text-[10px] tracking-widest shadow-lg">
+        AVAILABLE FOR HIRE
       </div>
     </div>
 
-    <!-- Left column: text content -->
-    <div class="flex-1 max-w-2xl w-full text-center lg:text-left">
-      <!-- Name with scramble effect -->
-      <h1
-        class="font-display font-bold text-brand-text mb-5 leading-none tracking-tight"
-        style="font-size: clamp(2.6rem, 7vw, 6.5rem);"
-      >
-        <span
-          id="scramble-text"
-          data-target="Sairam"
-          class="block text-brand-cyan gsap-reveal"
-          aria-label="Sairam">Sairam</span
-        >
-        <span class="block text-brand-text gsap-reveal">Lakshmanan</span>
-      </h1>
+    <!-- Name — clearly below photo with enough gap -->
+    <h1 class="font-display font-bold leading-tight tracking-tight mt-6 mb-4" style="font-size: clamp(2.8rem, 7vw, 5.5rem);">
+      <span id="scramble-text" data-target="Sairam" class="text-brand-cyan gsap-reveal inline-block">Sairam</span>
+      <span class="text-brand-text gsap-reveal inline-block ml-3 md:ml-4">Lakshmanan</span>
+    </h1>
 
-      <!-- Role cycling -->
-      <div class="flex items-center justify-center lg:justify-start gap-3 mb-5 gsap-reveal">
-        <span class="text-brand-muted font-mono-accent text-sm">//</span>
-        <div class="overflow-hidden h-8">
-          <p
-            id="role-cycle"
-            class="font-display text-xl md:text-2xl text-brand-text font-medium leading-8"
-          >
-            Full-Stack Developer
-          </p>
-        </div>
-      </div>
-
-      <!-- Tagline -->
-      <p
-        class="font-display text-brand-muted text-lg md:text-xl max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed gsap-reveal"
-      >
-        I build systems that scale and interfaces that matter.
-      </p>
-
-      <!-- CTAs -->
-      <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-12 gsap-reveal">
-        <a
-          href="#projects"
-          class="magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-bg bg-brand-cyan rounded-lg overflow-hidden glow-cyan transition-all duration-300"
-          data-cursor="hover"
-          id="cta-projects"
-        >
-          <span class="magnetic-inner relative z-10">view work →</span>
-          <span
-            class="absolute inset-0 bg-brand-lime scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"
-          ></span>
-        </a>
-        <a
-          href="#contact"
-          class="magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-cyan border border-brand-cyan rounded-lg overflow-hidden transition-all duration-300 hover:text-brand-bg"
-          data-cursor="hover"
-          id="cta-contact"
-        >
-          <span class="magnetic-inner relative z-10">get in touch</span>
-          <span
-            class="absolute inset-0 bg-brand-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"
-          ></span>
-        </a>
-        <a
-          href="/Resume.pdf"
-          download
-          class="magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-muted border border-brand-border rounded-lg overflow-hidden hover:border-brand-muted hover:text-brand-text transition-all duration-300"
-          data-cursor="hover"
-        >
-          <span class="magnetic-inner relative z-10">Resume</span>
-        </a>
-      </div>
-
-      <!-- Stat counters -->
-      <div class="flex flex-wrap justify-center lg:justify-start gap-8 sm:gap-10 pt-6 border-t border-brand-border gsap-reveal">
-        {
-          [
-            { value: "3+", label: "Projects Built" },
-            { value: "8.67", label: "CGPA" },
-            { value: "130+", label: "LeetCode Problems" },
-          ].map(({ value, label }) => (
-            <div class="group text-center lg:text-left">
-              <div class="font-display text-3xl font-bold text-brand-cyan group-hover:text-brand-lime transition-colors duration-300">
-                {value}
-              </div>
-              <div class="font-mono-accent text-xs text-brand-muted mt-1">
-                {label}
-              </div>
-            </div>
-          ))
-        }
+    <!-- Role cycling -->
+    <div class="flex items-center justify-center gap-3 mb-4 gsap-reveal">
+      <span class="text-brand-muted font-mono-accent text-sm">//</span>
+      <div class="overflow-hidden h-8">
+        <p id="role-cycle" class="font-display text-xl md:text-2xl text-brand-text font-medium leading-8">
+          Full-Stack Developer
+        </p>
       </div>
     </div>
 
-    <!-- Right column: Interactive Photo Frame (desktop only) -->
-    <div
-      class="shrink-0 hidden lg:flex items-center justify-center group"
-      id="hero-photo-wrap"
-    >
-      <div
-        class="relative w-56 h-56 xl:w-72 xl:h-72 cursor-pointer perspective-1000"
-        id="photo-container"
-      >
-        <!-- Outer Glowing Aura (expands & brightens on hover) -->
-        <div
-          class="absolute -inset-4 rounded-full bg-gradient-to-r from-brand-cyan via-brand-lime to-purple-500 opacity-20 blur-xl group-hover:opacity-60 group-hover:scale-110 transition-all duration-500 ease-out pointer-events-none"
-          id="photo-aura"
-        >
-        </div>
+    <!-- Tagline -->
+    <p class="font-display text-brand-muted text-base md:text-lg max-w-lg mb-10 leading-relaxed gsap-reveal">
+      I build systems that scale and interfaces that matter.
+    </p>
 
-        <!-- Glowing Gradient Ring (static gradient, magnetic tilt on hover) -->
-        <div
-          class="relative w-full h-full rounded-full p-[3px] bg-gradient-to-tr from-brand-cyan via-brand-lime to-purple-400 shadow-2xl transition-all duration-500 ease-out group-hover:shadow-[0_0_40px_rgba(0,229,204,0.4)]"
-          id="photo-frame"
-        >
-          <!-- Inner image container with zoom effect -->
-          <div
-            class="w-full h-full rounded-full bg-brand-surface overflow-hidden relative flex items-center justify-center"
-          >
-            <!-- Shimmer / Light Beam effect on hover -->
-            <div
-              class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out z-20 pointer-events-none"
-            >
-            </div>
+    <!-- CTAs -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12 gsap-reveal">
+      <a href="#projects" class="magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-bg bg-brand-cyan rounded-lg overflow-hidden glow-cyan transition-all duration-300" data-cursor="hover" id="cta-projects">
+        <span class="magnetic-inner relative z-10">view work →</span>
+        <span class="absolute inset-0 bg-brand-lime scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"></span>
+      </a>
+      <a href="#contact" class="magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-cyan border border-brand-cyan rounded-lg overflow-hidden transition-all duration-300 hover:text-brand-bg" data-cursor="hover" id="cta-contact">
+        <span class="magnetic-inner relative z-10">get in touch</span>
+        <span class="absolute inset-0 bg-brand-cyan scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"></span>
+      </a>
+      <button class="resume-btn magnetic group relative px-7 py-3.5 font-mono-accent text-sm font-medium text-brand-muted border border-brand-border rounded-lg overflow-hidden hover:border-brand-muted hover:text-brand-text transition-all duration-300" data-cursor="hover">
+        <span class="magnetic-inner relative z-10">Resume ↗</span>
+      </button>
+    </div>
 
-            <!-- Profile image -->
-            <div
-              class="w-full h-full flex flex-col items-center justify-center gap-2 text-brand-muted transition-transform duration-500 ease-out group-hover:scale-105"
-              id="photo-content"
-            >
-              <img
-                src="/Profile.png"
-                alt="Sairam Lakshmanan"
-                class="w-full h-full object-cover object-top rounded-full"
-              />
-            </div>
-          </div>
+    <!-- Slim stats row -->
+    <div class="flex flex-wrap justify-center gap-8 sm:gap-12 pt-6 pb-8 border-t border-brand-border gsap-reveal">
+      {[
+        { value: "3+", label: "Projects Built" },
+        { value: "8.67", label: "CGPA" },
+        { value: "130+", label: "LeetCode Problems" },
+      ].map(({ value, label }) => (
+        <div class="group text-center">
+          <div class="font-display text-2xl font-bold text-brand-cyan group-hover:text-brand-lime transition-colors duration-300">{value}</div>
+          <div class="font-mono-accent text-[11px] text-brand-muted mt-1 uppercase tracking-wider">{label}</div>
         </div>
-
-        <!-- Decorative tech badge hovering on bottom right -->
-        <div
-          class="absolute -bottom-2 -right-2 px-3.5 py-1 rounded-full bg-brand-bg/90 border border-brand-cyan/40 backdrop-blur-md text-brand-cyan font-mono-accent text-[10px] tracking-wider shadow-lg group-hover:border-brand-lime group-hover:text-brand-lime group-hover:scale-105 transition-all duration-300 pointer-events-none"
-        >
-          AVAILABLE FOR HIRE
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <div
-    class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-    aria-hidden="true"
-  >
-    <span class="font-mono-accent text-xs text-brand-muted tracking-widest"
-      >scroll</span
-    >
-    <div
-      class="w-px h-10 bg-gradient-to-b from-brand-cyan to-transparent animate-pulse"
-    >
-    </div>
+  <!-- Scroll indicator — placed below all content, no overlap -->
+  <div class="flex flex-col items-center gap-1 pb-6 z-10" aria-hidden="true">
+    <span class="font-mono-accent text-[10px] text-brand-muted tracking-widest uppercase">scroll</span>
+    <div class="w-px h-7 bg-gradient-to-b from-brand-cyan to-transparent animate-pulse"></div>
   </div>
 </section>
 
@@ -242,140 +96,53 @@ import { personal } from "../data/content.js";
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ── GSAP entrance animations ──────────────────────────────
   if (!prefersReduced) {
     gsap.utils.toArray<HTMLElement>("#hero .gsap-reveal").forEach((el, i) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: i * 0.12,
-          ease: "power3.out",
-        },
-      );
+      gsap.fromTo(el, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, delay: i * 0.05, ease: "power2.out" });
     });
 
-    // Desktop photo wrap entrance
-    gsap.fromTo(
-      "#hero-photo-wrap",
-      { opacity: 0, x: 40 },
-      { opacity: 1, x: 0, duration: 1.0, delay: 0.3, ease: "power3.out" },
+    gsap.fromTo("#photo-container",
+      { opacity: 0, scale: 0.88 },
+      { opacity: 1, scale: 1, duration: 0.9, delay: 0.1, ease: "back.out(1.4)" }
     );
-
-    // Mobile photo entrance
-    gsap.fromTo(
-      "#hero-photo-mobile",
-      { opacity: 0, scale: 0.85 },
-      { opacity: 1, scale: 1, duration: 0.9, delay: 0.2, ease: "back.out(1.4)" },
-    );
-
-    // 3D Tilt & Magnetic Hover Animation for Photo Frame
-    const photoContainer = document.getElementById("photo-container");
-    const photoFrame = document.getElementById("photo-frame");
-
-    if (photoContainer && photoFrame) {
-      photoContainer.addEventListener("mousemove", (e: MouseEvent) => {
-        const rect = photoContainer.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        const rotateX = (-y / (rect.height / 2)) * 14;
-        const rotateY = (x / (rect.width / 2)) * 14;
-
-        gsap.to(photoFrame, {
-          rotateX: rotateX,
-          rotateY: rotateY,
-          x: x * 0.12,
-          y: y * 0.12,
-          duration: 0.3,
-          ease: "power2.out",
-          transformPerspective: 800,
-        });
-      });
-
-      photoContainer.addEventListener("mouseleave", () => {
-        gsap.to(photoFrame, {
-          rotateX: 0,
-          rotateY: 0,
-          x: 0,
-          y: 0,
-          duration: 0.6,
-          ease: "elastic.out(1, 0.4)",
-        });
-      });
-    }
 
     // Parallax grid on scroll
     gsap.to("#hero-grid", {
-      yPercent: 20,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
+      yPercent: 20, ease: "none",
+      scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 },
     });
-
-    // Glow parallax
     gsap.to("#hero-glow", {
-      yPercent: -15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 2,
-      },
+      yPercent: -15, ease: "none",
+      scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 2 },
     });
   }
 
-  // ── Text Scramble Effect ─────────────────────────────────
-  // Runs regardless of reduced-motion (it's subtle and quick)
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%";
+  // ── Text Scramble ─────────────────────────────────────────
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%";
   const scrambleEl = document.getElementById("scramble-text");
 
   function scramble(el: HTMLElement, finalText: string) {
     let iterations = 0;
     const maxIter = finalText.length * 5;
     const interval = setInterval(() => {
-      el.textContent = finalText
-        .split("")
-        .map((char, i) => {
-          if (i < Math.floor(iterations / 5)) return char;
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
-        .join("");
-      if (iterations >= maxIter) {
-        clearInterval(interval);
-        el.textContent = finalText;
-      }
+      el.textContent = finalText.split("").map((char, i) => {
+        if (i < Math.floor(iterations / 5)) return char;
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join("");
+      if (iterations >= maxIter) { clearInterval(interval); el.textContent = finalText; }
       iterations++;
     }, 30);
   }
 
   if (scrambleEl) {
-    const target =
-      scrambleEl.getAttribute("data-target") || scrambleEl.textContent || "";
-    setTimeout(() => scramble(scrambleEl, target), 400);
+    const target = scrambleEl.getAttribute("data-target") || scrambleEl.textContent || "";
+    setTimeout(() => scramble(scrambleEl, target), 500);
   }
 
   // ── Role cycling ─────────────────────────────────────────
-  const roles = [
-    "Full-Stack Developer",
-    "AI Enthusiast",
-    "Backend Engineer",
-    "Problem Solver",
-    "CSE @ SRM IST",
-  ];
+  const roles = ["Full-Stack Developer", "AI Enthusiast", "Backend Engineer", "Problem Solver", "CSE @ SRM IST"];
   const roleCycleEl = document.getElementById("role-cycle");
 
   if (roleCycleEl && !prefersReduced) {
@@ -383,17 +150,10 @@ import { personal } from "../data/content.js";
     setInterval(() => {
       currentIndex = (currentIndex + 1) % roles.length;
       gsap.to(roleCycleEl, {
-        yPercent: -100,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in",
+        yPercent: -100, opacity: 0, duration: 0.3, ease: "power2.in",
         onComplete: () => {
           roleCycleEl.textContent = roles[currentIndex];
-          gsap.fromTo(
-            roleCycleEl,
-            { yPercent: 100, opacity: 0 },
-            { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
-          );
+          gsap.fromTo(roleCycleEl, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: "power2.out" });
         },
       });
     }, 2500);

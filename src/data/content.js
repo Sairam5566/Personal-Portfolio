@@ -61,8 +61,8 @@ export const projects = [
     description:
       "A secure full-stack file-sharing platform using a FastAPI backend and React frontend, integrating AES-128 encryption with decentralised, blockchain-based hashing to guarantee tamper-proof file integrity. Features a real-time AI anomaly detection system with ML-driven data pipelines that continuously analyse user access patterns and proactively identify security threats.",
     tags: ["FastAPI", "React", "Blockchain", "AES-128", "ML", "Python"],
-    github: "#",       // ← replace with repo link
-    live: "",          // ← replace with live URL or leave empty
+    github: "https://github.com/Sairam5566/Secure-File-Sharing", 
+    live: "",          
     featured: true,
     accentColor: "#00E5CC",
   },
@@ -74,7 +74,7 @@ export const projects = [
     description:
       "A full-stack agricultural platform utilising FastAPI and JWT role-based access control, integrating the Google Gemini API for AI-powered crop recommendations and disease detection. Supports 22 languages, real-time market pricing, an integrated e-commerce marketplace, and automated weather forecasting to deliver scalable, localised insights.",
     tags: ["FastAPI", "Google Gemini", "JWT", "React", "Python", "NLP"],
-    github: "#",
+    github: "https://github.com/Sairam5566/agrisense",
     live: "",
     featured: true,
     accentColor: "#A8FF78",
@@ -87,7 +87,7 @@ export const projects = [
     description:
       "A full-stack campus complaint management system using FastAPI and React with role-based access controls for students, faculty, and administrators. Features an automated tracking pipeline that streamlines issue submission, delivers live status updates, and manages resolution workflows end-to-end.",
     tags: ["FastAPI", "React", "Role-Based Auth", "Python", "PostgreSQL"],
-    github: "#",
+    github: "https://github.com/Sairam5566/Smart-Campus-Grievance-Resolution-System",  // ← replace with your specific repo link
     live: "",
     featured: false,
     accentColor: "#C084FC",
