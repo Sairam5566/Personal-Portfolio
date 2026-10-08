@@ -119,7 +119,7 @@ export const education = [
     institution: "SRM Institute of Science and Technology",
     degree: "B.Tech — Computer Science and Engineering with Cloud Computing",
     period: "2023 – 2027",
-    score: "CGPA 8.66 / 10",
+    score: "CGPA 8.67 / 10",
     location: "Chennai, India",
   },
   {
